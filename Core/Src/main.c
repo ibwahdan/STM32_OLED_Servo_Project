@@ -329,6 +329,7 @@ int main(void)
   /* USER CODE END SysInit */
 
   /* Initialize all configured peripherals */
+  HAL_Delay(500);
   MX_GPIO_Init();
   MX_USART2_UART_Init();
   MX_TIM3_Init();
@@ -381,7 +382,7 @@ int main(void)
 		  SH1107_Clear();
 		  SH1107_Set_Cursor(0, 0); //page 0 column 0
 		  buttonCount++;
-		  if(buttonCount >= 5 && buttonCount < 10) {
+		  if(buttonCount >= 5 && buttonCount < 8) {
 			  SH1107_Unlock_Animation();
 			  SH1107_Set_Cursor(0, 0);
 			  SH1107_Write_String("UNLOCKED!");
@@ -398,6 +399,7 @@ int main(void)
 		  } else {
 			  buzzer_on();
 			  HAL_Delay(100);
+			  buzzer_off();
 			  send_uart_message("Device Locked!\r\n");
 			  SH1107_Write_String("LOCKED!");
 			  servo_set_angle(180);  // Far right
@@ -409,7 +411,7 @@ int main(void)
 		  buzzer_off();
 	  }
 
-	  if(buttonCount >= 10) {buttonCount = 0;}
+	  if(buttonCount >= 8) {buttonCount = 0;}
 
 
 
